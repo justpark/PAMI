@@ -405,7 +405,7 @@ class ClientImpl implements IClient
             '------ Sending: ------ ' . "\n" . $messageToSend . '----------'
         );
         $this->lastActionId = $message->getActionId();
-        if (@fwrite($this->socket, $messageToSend) < $length) {
+        if (is_bool($this->socket) || @fwrite($this->socket, $messageToSend) < $length) {
             throw new ClientException('Could not send message');
         }
         $read = 0;
